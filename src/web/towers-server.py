@@ -40,7 +40,6 @@ def send_to_scala(data):
 
 Thread(target=listen_to_scala, args=(scala_socket,)).start()
 
-
 # ** Setup and start Python web server **
 
 @socket_server.on('connect')
