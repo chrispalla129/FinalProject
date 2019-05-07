@@ -6,17 +6,14 @@ import akka.actor.{Actor, ActorRef}
 
 
 class GameActor extends Actor {
-
   var players: Map[String, ActorRef] = Map()
   var towers: List[ActorRef] = List()
-
   val game: Game = new Game()
   var levelNumber = 0
-  loadLevel(levelNumber)
+
 
   def loadLevel(levelNumber: Int): Unit ={
     game.load()
-
   }
 
   override def receive: Receive = {

@@ -8,20 +8,15 @@ var context = canvas.getContext("2d");
 context.globalCompositeOperation = 'source-over';
 
 function parseGameState(event) {
-    // console.log(event);
     const gameState = JSON.parse(event);
-
     drawGameBoard(gameState['gridSize']);
 
-
     for (let player of gameState['tanks']) {
-        placeCircle(player['x'], player['y'], player['id'] === socket.id ? '#ffff00' : '#56bcff', 2.0);
+        placeCircle(player['x'], player['y'], player['id'] === socket.id ? '#71ffe4' : '#ff0707', 2.0);
     }
-
     for (let projectile of gameState['bullets']) {
-        placeCircle(projectile['x'], projectile['y'], 'red', 1.0);
+        placeCircle(projectile['x'], projectile['y'], 'black', 1.0);
     }
-
 }
 
 function cleanInt(input) {
@@ -33,7 +28,6 @@ function cleanInt(input) {
 function rgb(r, g, b) {
     return "#" + cleanInt(r) + cleanInt(g) + cleanInt(b);
 }
-
 
 function drawGameBoard(gridSize) {
 
@@ -62,15 +56,6 @@ function drawGameBoard(gridSize) {
 
 }
 
-
-function placeSquare(x, y, color) {
-    context.fillStyle = color;
-    context.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-    context.strokeStyle = 'black';
-    context.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
-}
-
-
 function placeCircle(x, y, color, size) {
     context.fillStyle = color;
     context.beginPath();
@@ -84,11 +69,4 @@ function placeCircle(x, y, color, size) {
     context.stroke();
 }
 
-function xComp(degrees){
-    return Math.cos(Math.PI*degrees/180.0)
-}
-
-function yComp(degrees){
-    return Math.sin(Math.PI*degrees/180.0)
-}
 

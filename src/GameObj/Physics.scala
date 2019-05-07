@@ -11,23 +11,19 @@ object Physics {
     var i = -1
     for (bullet <- board.Bullets) {
       i += 1
-
       // get potential location
       val potentialLocation: Bullet = new Bullet(bullet.id, computePotentialLocation(bullet.location, bullet.velocity, deltaTime), bullet.velocity)
       board.Bullets(i) = potentialLocation
-
     }
     i = -1
     for(tank <- board.Tanks){
       i += 1
-
       // get potential location
       val potentialLocation: Tank = new Tank(tank.id, computePotentialLocation(tank.location, tank.velocity, deltaTime), tank.velocity)
       board.Tanks(i) = potentialLocation
     }
-
+      // detect collision
     checkForPlayerHits(board)
-
   }
 
   def checkForPlayerHits(board: Board): Unit = {
