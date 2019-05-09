@@ -10,7 +10,10 @@ class Game {
   var lastUpdateTime: Long = System.nanoTime()
 
   def addPlayer(id: String): Unit ={
-    val tank: Tank = new Tank(id, new PhysicsVector(Math.random() * windowWidth, Math.random() * windowHeight), new PhysicsVector(0,0))
+    val width = Math.random() * windowWidth
+    val height = Math.random() * windowHeight
+    val tank: Tank = new Tank(id, new PhysicsVector(width, height), new PhysicsVector(0,0))
+    println("Tank " + id + " spawned at " + width + ", " + height)
     board.Tanks += tank
   }
 
@@ -56,8 +59,7 @@ class Game {
     for(i <- board.Tanks) if(i.id == id) tank = i
     val mX = (mouseX - 7) / 30
     val mY = (mouseY - 7) / 30
-    println(mX + " " + mY)
-    println(tank.location.x + " " + tank.location.y)
+    println("Shot made in direction: " + mX + ", " + mY + " by Tank " + tank.id)
     val velocity = new PhysicsVector(mX - tank.location.x, mY - tank.location.y)
 
     board.Bullets += new Bullet(id, new PhysicsVector(tank.location.x, tank.location.y, 3), velocity)

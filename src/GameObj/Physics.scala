@@ -34,6 +34,7 @@ object Physics {
           if (Math.abs(distance) < .3){
             val id = bullet.id
             for(i <- board.Tanks) if(i.id == id) i.numOfKills += 1
+            println("Tank " + tank.id + " was hit by Tank " + id)
             board.respawn(tank)
             tank.numOfDeaths += 1
             board.Bullets -= bullet

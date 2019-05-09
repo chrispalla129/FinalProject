@@ -8,8 +8,11 @@ class Board{
   var boundaries: List[Boundary] = List()
 
   def respawn(tank: Tank): Unit ={
+    val width = Math.random() * 15
+    val height = Math.random() * 15
+    println("Tank " + tank.id + " respawned at " + width + ", " + height)
     this.Tanks -= tank
-    val newTank: Tank = new Tank(tank.id, new PhysicsVector(Math.random() * 15, Math.random() * 15), new PhysicsVector(0,0))
+    val newTank: Tank = new Tank(tank.id, new PhysicsVector(width, height), new PhysicsVector(0,0))
     this.Tanks += newTank
   }
 
