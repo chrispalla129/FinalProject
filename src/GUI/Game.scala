@@ -13,12 +13,13 @@ class Game {
     val width = Math.random() * windowWidth
     val height = Math.random() * windowHeight
     val tank: Tank = new Tank(id, new PhysicsVector(width, height), new PhysicsVector(0,0))
-    println("Tank " + id + " spawned at " + width + ", " + height)
+
     board.Tanks += tank
+    println("Tank " + id + " spawned at " + width + ", " + height)
   }
 
   def removePlayer(id: String): Unit = {
-    for(i <- board.Tanks) if(i.id == id) board.Tanks -= i
+    for(tank <- board.Tanks) if(tank.id == id) board.Tanks -= tank
   }
   def load(): Unit = {
     blockTile(0, 0, windowWidth, windowHeight)
@@ -27,6 +28,7 @@ class Game {
   def update(): Unit = {
     val time: Long = System.nanoTime()
     val dt = (time - this.lastUpdateTime) / 1000000000.0
+
     Physics.updateWorld(board, dt)
     this.lastUpdateTime = time
   }
@@ -49,20 +51,17 @@ class Game {
         "v_y" -> Json.toJson(v.velocity.y),
         "id" -> Json.toJson(v.id))) })),
       )
-
-
     Json.stringify(Json.toJson(gameState))
   }
 
   def shoot(mouseX: Double, mouseY: Double, id: String): Unit = {
     var tank: Tank = null
-    for(i <- board.Tanks) if(i.id == id) tank = i
     val mX = (mouseX - 7) / 30
     val mY = (mouseY - 7) / 30
-    println("Shot made in direction: " + mX + ", " + mY + " by Tank " + tank.id)
-    val velocity = new PhysicsVector(mX - tank.location.x, mY - tank.location.y)
 
-    board.Bullets += new Bullet(id, new PhysicsVector(tank.location.x, tank.location.y, 3), velocity)
+    for(i <- board.Tanks) if(i.id == id) tank = i
+    board.Bullets += new Bullet(id, new PhysicsVector(tank.location.x, tank.location.y, 3), new PhysicsVector(mX - tank.location.x, mY - tank.location.y))
+    println("Shot made in direction: " + mX + ", " + mY + " by Tank " + tank.id)
   }
 
   def blockTile(x: Int, y: Int, width: Int = 1, height: Int = 1): Unit = {

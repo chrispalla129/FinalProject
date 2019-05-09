@@ -42,6 +42,7 @@ Thread(target=listen_to_scala, args=(scala_socket,)).start()
 
 # ** Setup and start Python web server **
 
+
 @socket_server.on('connect')
 def got_message():
     print(request.sid + " connected")
@@ -78,6 +79,7 @@ def mouse_location(jsonMouseLocation):
     mouseLocation = json.loads(jsonMouseLocation)
     message = {"username": request.sid, "action": "click", "x": mouseLocation["x"], "y": mouseLocation["y"]}
     send_to_scala(message)
+
 
 @app.route('/')
 def index():
